@@ -1,4 +1,4 @@
-# Cardroom — Professional Business Card Maker
+# CARDROOM — Professional Business Card Maker
 
 A React-based UI for designing professional business cards. Inspired by [Cardroom on Framer](https://affectionate-designs-400452.framer.app/).
 
