@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* Landing — dark theme */
+  --color-bg: #070b14;
+  --color-bg-elevated: #111827;
+  --color-bg-card: #141c2e;
+  --color-accent: #2b7fff;
+  --color-accent-hover: #1a6fe8;
+  --color-fg: #ffffff;
+  --color-fg-muted: #8b95a8;
+  --color-fg-subtle: #5c6578;
+  --color-border: rgba(255, 255, 255, 0.08);
+
+  /* Editor — light theme */
+  --color-paper: #f5f3ef;
+  --color-paper-muted: #e5e2db;
+  --color-ink: #0a0a0a;
+  --color-ink-muted: #6b6560;
+
+  /* Card themes */
+  --color-cobalt: #2b7fff;
+  --color-charcoal: #141824;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+
+  ::selection {
+    background: rgba(43, 127, 255, 0.3);
+  }
+}
