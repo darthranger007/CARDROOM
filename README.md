@@ -1,5 +1,11 @@
 # CARDROOM — Professional Business Card Maker
 
+**Live app (GitHub Pages):** **[cardroom — free business card maker](https://darthranger007.github.io/CARDROOM/)**  
+Design cards in the browser and export print-ready PDF or PNG:  
+https://darthranger007.github.io/CARDROOM/
+
+> **Repo maintainers:** Set **About → Website** on GitHub to the live URL above so search engines prefer the app over this repository page.
+
 A React-based UI for designing professional business cards. Inspired by [Cardroom on Framer](https://affectionate-designs-400452.framer.app/).
 
 ## Features
@@ -24,9 +30,9 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## Live site
 
-After deployment, the app is hosted on GitHub Pages at:
+**https://darthranger007.github.io/CARDROOM/**
 
-https://darthranger007.github.io/CARDROOM/
+Editor: https://darthranger007.github.io/CARDROOM/editor
 
 Enable **Settings → Pages → Build and deployment → GitHub Actions** on the repository if the workflow has not run yet.
 
