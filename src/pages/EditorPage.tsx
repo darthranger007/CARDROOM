@@ -42,16 +42,16 @@ export function EditorPage() {
   return (
     <div className="editor-ambient min-h-screen text-fg">
       <CardExportTarget />
-      <main className="flex min-h-screen items-start justify-center px-4 py-8 sm:px-6 sm:py-12">
-        <div className="w-full max-w-[1120px] rounded-[32px] border border-white/[0.08] bg-editor-panel/95 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:p-10 lg:p-12">
+      <main className="flex min-h-screen justify-center px-4 py-8 sm:px-6 sm:py-12">
+        <div className="flex w-full max-w-[1120px] flex-col rounded-[32px] border border-white/[0.08] bg-editor-panel/95 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:p-10 lg:p-12">
           {step === "essentials" ? (
             <EditorEssentials onContinue={() => setStep("finish")} />
           ) : (
             <EditorFinish onBack={() => setStep("essentials")} />
           )}
-        </div>
-        <div className="mx-auto mt-8 flex max-w-[1120px] justify-center pb-4">
-          <DonateButton variant="dark" />
+          <div className="mt-10 flex justify-center border-t border-editor-border/70 pt-6">
+            <DonateButton variant="dark" />
+          </div>
         </div>
       </main>
     </div>
