@@ -16,10 +16,13 @@ function RouteFallback() {
   );
 }
 
+const routerBasename =
+  import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL.replace(/\/$/, "");
+
 export default function App() {
   return (
     <CardProvider>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter basename={routerBasename}>
         <AnalyticsRouteTracker />
         <Suspense fallback={<RouteFallback />}>
           <Routes>
