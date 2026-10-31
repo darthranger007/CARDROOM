@@ -13,3 +13,5 @@ export const SITE_DESCRIPTION =
 export const DONATE_URL = "https://buymeacoffee.com/shaurzz";
 
 export const DONATE_LABEL = "Donate";
+
+export const GA_MEASUREMENT_ID = "G-83N3MNDXVQ";

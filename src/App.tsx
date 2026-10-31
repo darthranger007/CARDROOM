@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AnalyticsRouteTracker } from "./components/AnalyticsRouteTracker";
 import { CardProvider } from "./context/CardContext";
 import { LandingPage } from "./pages/LandingPage";
 
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <CardProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <AnalyticsRouteTracker />
         <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
