@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://darthranger007.github.io/CARDROOM/sitemap.xml

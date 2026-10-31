@@ -4,7 +4,10 @@ import { CardExportTarget } from "../components/editor/CardExportTarget";
 import { EditorEssentials } from "../components/editor/EditorEssentials";
 import { EditorFinish } from "../components/editor/EditorFinish";
 import { useCard } from "../context/CardContext";
+import { usePageMeta } from "../hooks/usePageMeta";
+import { SITE_NAME } from "../config/site";
 import type { CardLayout } from "../types/card";
+import { ensureEditorFontsLoaded } from "../utils/loadEditorFonts";
 
 const validTemplates: CardLayout[] = ["classic", "editorial", "minimal"];
 
@@ -12,6 +15,15 @@ export function EditorPage() {
   const [searchParams] = useSearchParams();
   const { loadTemplate, setTheme } = useCard();
   const [step, setStep] = useState<"essentials" | "finish">("essentials");
+
+  usePageMeta({
+    title: `Design Your Business Card | ${SITE_NAME}`,
+    path: "editor",
+  });
+
+  useEffect(() => {
+    ensureEditorFontsLoaded();
+  }, []);
 
   useEffect(() => {
     const template = searchParams.get("template");

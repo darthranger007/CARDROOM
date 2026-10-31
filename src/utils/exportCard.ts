@@ -1,6 +1,3 @@
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
-
 export const CARD_WIDTH_IN = 3.5;
 export const CARD_HEIGHT_IN = 2;
 export const EXPORT_WIDTH_PX = 1050;
@@ -14,8 +11,27 @@ export function slugify(text: string): string {
     .slice(0, 40);
 }
 
+async function loadExportLibraries() {
+  const [html2canvasModule, jspdfModule] = await Promise.all([
+    import("html2canvas"),
+    import("jspdf"),
+  ]);
+  return {
+    html2canvas: html2canvasModule.default,
+    jsPDF: jspdfModule.jsPDF,
+  };
+}
+
+let exportLibrariesPromise: ReturnType<typeof loadExportLibraries> | null = null;
+
+function getExportLibraries() {
+  exportLibrariesPromise ??= loadExportLibraries();
+  return exportLibrariesPromise;
+}
+
 async function captureElement(element: HTMLElement): Promise<HTMLCanvasElement> {
   await document.fonts.ready;
+  const { html2canvas } = await getExportLibraries();
 
   return html2canvas(element, {
     scale: 1,
@@ -57,6 +73,7 @@ export async function exportCardAsPdf(
 ): Promise<Blob> {
   const canvas = await captureElement(element);
   const imgData = canvas.toDataURL("image/png");
+  const { jsPDF } = await getExportLibraries();
 
   const pdf = new jsPDF({
     orientation: "landscape",
@@ -123,6 +140,7 @@ async function exportCardAsPdfBlob(
 ): Promise<Blob> {
   const canvas = await captureElement(element);
   const imgData = canvas.toDataURL("image/png");
+  const { jsPDF } = await getExportLibraries();
 
   const pdf = new jsPDF({
     orientation: "landscape",
