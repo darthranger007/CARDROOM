@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { CardExportTarget } from "../components/editor/CardExportTarget";
 import { EditorEssentials } from "../components/editor/EditorEssentials";
 import { EditorFinish } from "../components/editor/EditorFinish";
+import { DonateButton } from "../components/layout/DonateButton";
 import { useCard } from "../context/CardContext";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { SITE_NAME } from "../config/site";
@@ -48,6 +49,9 @@ export function EditorPage() {
           ) : (
             <EditorFinish onBack={() => setStep("essentials")} />
           )}
+        </div>
+        <div className="mx-auto mt-8 flex max-w-[1120px] justify-center pb-4">
+          <DonateButton variant="dark" />
         </div>
       </main>
     </div>

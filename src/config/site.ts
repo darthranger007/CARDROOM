@@ -8,3 +8,8 @@ export const SITE_TAGLINE =
 
 export const SITE_DESCRIPTION =
   "Create custom business cards in minutes. Choose themes and layouts, add your logo, customize fonts, and download print-ready PDF or PNG — free, no account required.";
+
+/** Replace with your Ko-fi, Buy Me a Coffee, PayPal, or GitHub Sponsors URL. */
+export const DONATE_URL = "https://buymeacoffee.com/shaurzz";
+
+export const DONATE_LABEL = "Donate";

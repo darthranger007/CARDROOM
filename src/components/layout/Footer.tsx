@@ -1,3 +1,5 @@
+import { DonateButton } from "./DonateButton";
+
 interface FooterProps {
   variant?: "dark" | "light";
 }
@@ -15,6 +17,7 @@ export function Footer({ variant = "dark" }: FooterProps) {
         <p className="text-xs">
           Cardroom<sup className="text-[7px]">®</sup> — Professional Business Cards
         </p>
+        <DonateButton variant={variant} />
         <p className={`text-xs ${isDark ? "text-fg-subtle" : "text-ink-muted/60"}`}>
           Built with React
         </p>
