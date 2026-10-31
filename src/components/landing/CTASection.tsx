@@ -7,7 +7,7 @@ export function CTASection() {
         <p className="text-[14px] text-fg-muted">
           Your card is already in there.
         </p>
-        <h2 className="mt-4 text-[clamp(2rem,4vw,3.25rem)] leading-[1.1] font-bold tracking-[-0.02em]">
+          <h2 className="font-card-serif mt-4 text-[clamp(2rem,4vw,3.25rem)] leading-[1.1] font-normal tracking-[-0.01em]">
           Make it unmistakable.
         </h2>
         <Link

@@ -3,7 +3,7 @@ import { BusinessCard } from "../card/BusinessCard";
 import { EXPORT_HEIGHT_PX, EXPORT_WIDTH_PX } from "../../utils/exportCard";
 
 export function CardExportTarget() {
-  const { cardData, theme, layout, logoUrl } = useCard();
+  const { cardData, theme, layout, logoUrl, typography } = useCard();
 
   return (
     <div
@@ -17,6 +17,7 @@ export function CardExportTarget() {
           theme={theme}
           layout={layout}
           logoUrl={logoUrl}
+          typography={typography}
           exportMode
         />
       </div>

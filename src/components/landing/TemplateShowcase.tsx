@@ -9,7 +9,7 @@ export function TemplateShowcase() {
     <section className="border-t border-border px-8 py-20 lg:px-12 lg:py-28">
       <div className="mx-auto max-w-[1400px]">
         <div className="mb-14 flex flex-col gap-4 sm:mb-20 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-bold tracking-[-0.02em]">
+          <h2 className="font-card-serif text-[clamp(1.75rem,3vw,2.5rem)] font-normal tracking-[-0.01em]">
             The first edition.
           </h2>
           <p className="text-[11px] font-medium tracking-[0.22em] text-fg-muted uppercase">

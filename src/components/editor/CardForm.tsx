@@ -3,7 +3,10 @@ import { useCard } from "../../context/CardContext";
 const fields = [
   { key: "name" as const, label: "Full name", placeholder: "Nila Rao" },
   { key: "role" as const, label: "Role / Title", placeholder: "Independent Creative Director" },
+  { key: "tagline" as const, label: "Tagline", placeholder: "One small signal of personality" },
   { key: "email" as const, label: "Email", placeholder: "nila@raoworks.studio" },
+  { key: "phone" as const, label: "Phone", placeholder: "+91 00000 00000" },
+  { key: "website" as const, label: "Website", placeholder: "raoworks.studio" },
   { key: "location" as const, label: "Location", placeholder: "mumbai" },
   { key: "year" as const, label: "Year (optional)", placeholder: "2026" },
 ];

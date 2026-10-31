@@ -2,6 +2,7 @@
 
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
 
   /* Landing — dark theme */
   --color-bg: #050a15;
@@ -22,7 +23,7 @@
   --color-editor-border: rgba(255, 255, 255, 0.1);
 
   /* Shared light surfaces */
-  --color-paper: #f5f3ef;
+  --color-paper: #f7f4ef;
   --color-paper-muted: #e5e2db;
   --color-ink: #0a0a0a;
   --color-ink-muted: #6b6560;
@@ -43,5 +44,18 @@
 
   ::selection {
     background: rgba(43, 127, 255, 0.3);
+  }
+}
+
+@layer utilities {
+  .editor-ambient {
+    background:
+      radial-gradient(ellipse 90% 60% at 50% -30%, rgba(43, 127, 255, 0.14), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 100% 50%, rgba(43, 127, 255, 0.06), transparent),
+      #060a12;
+  }
+
+  .font-card-serif {
+    font-family: var(--font-serif);
   }
 }

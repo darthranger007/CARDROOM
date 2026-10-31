@@ -10,7 +10,7 @@ export function Hero() {
           <p className="mb-6 text-[11px] font-medium tracking-[0.24em] text-fg-muted uppercase">
             The professional card maker
           </p>
-          <h1 className="text-[clamp(2.5rem,4.8vw,4.5rem)] leading-[1.02] font-bold tracking-[-0.03em] text-fg">
+          <h1 className="font-card-serif text-[clamp(2.5rem,4.8vw,4.5rem)] leading-[1.02] font-normal tracking-[-0.02em] text-fg">
             Make the introduction before the handshake.
           </h1>
           <p className="mt-7 max-w-md text-[16px] leading-[1.65] text-fg-muted">

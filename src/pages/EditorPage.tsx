@@ -27,10 +27,10 @@ export function EditorPage() {
   }, [searchParams, loadTemplate, setTheme]);
 
   return (
-    <div className="min-h-screen bg-editor-bg text-fg">
+    <div className="editor-ambient min-h-screen text-fg">
       <CardExportTarget />
       <main className="flex min-h-screen items-start justify-center px-4 py-8 sm:px-6 sm:py-12">
-        <div className="w-full max-w-[1100px] rounded-[28px] border border-editor-border bg-editor-panel p-6 sm:p-10 lg:p-12">
+        <div className="w-full max-w-[1120px] rounded-[32px] border border-white/[0.08] bg-editor-panel/95 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:p-10 lg:p-12">
           {step === "essentials" ? (
             <EditorEssentials onContinue={() => setStep("finish")} />
           ) : (

@@ -9,10 +9,11 @@ import {
 } from "../../utils/exportCard";
 import { BusinessCard } from "../card/BusinessCard";
 import { EmailShareModal } from "./EmailShareModal";
+import { EditorPreviewFrame } from "./EditorPreviewFrame";
 import { LogoUpload } from "./LogoUpload";
+import { TypographyControls } from "./TypographyControls";
 
 const extraFields = [
-  { key: "location" as const, label: "Location", placeholder: "mumbai" },
   { key: "year" as const, label: "Year (optional)", placeholder: "2026" },
 ];
 
@@ -21,7 +22,7 @@ interface EditorFinishProps {
 }
 
 export function EditorFinish({ onBack }: EditorFinishProps) {
-  const { cardData, theme, layout, logoUrl, setLayout, updateCardData } =
+  const { cardData, theme, layout, logoUrl, typography, setLayout, updateCardData } =
     useCard();
   const [loading, setLoading] = useState<"pdf" | "png" | null>(null);
   const [emailOpen, setEmailOpen] = useState(false);
@@ -70,11 +71,34 @@ export function EditorFinish({ onBack }: EditorFinishProps) {
             <p className="text-[11px] font-medium tracking-[0.22em] text-fg-muted uppercase">
               Cardroom editor
             </p>
-            <h1 className="mt-3 text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1] font-bold tracking-[-0.02em] text-fg">
+            <h1 className="mt-3 font-card-serif text-[clamp(1.85rem,3.5vw,2.85rem)] leading-[1.08] tracking-[-0.01em] text-fg">
               Finish your card.
             </h1>
           </div>
         </div>
+
+        <section className="mb-10">
+          <p className="mb-5 text-[11px] font-medium tracking-[0.18em] text-fg-muted uppercase">
+            Card layout
+          </p>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {templates.map((template) => (
+              <button
+                key={template.id}
+                type="button"
+                onClick={() => setLayout(template.id as CardLayout)}
+                className={`rounded-xl border p-4 text-left transition-all ${
+                  layout === template.id
+                    ? "border-accent bg-editor-surface ring-1 ring-accent/30"
+                    : "border-editor-border bg-editor-surface hover:border-white/20"
+                }`}
+              >
+                <p className="text-sm font-semibold text-fg">{template.name}</p>
+                <p className="mt-1 text-[12px] text-fg-muted">{template.description}</p>
+              </button>
+            ))}
+          </div>
+        </section>
 
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <div className="space-y-10">
@@ -82,25 +106,9 @@ export function EditorFinish({ onBack }: EditorFinishProps) {
 
             <div>
               <p className="mb-5 text-[11px] font-medium tracking-[0.18em] text-fg-muted uppercase">
-                Card layout
+                Typography
               </p>
-              <div className="grid gap-3">
-                {templates.map((template) => (
-                  <button
-                    key={template.id}
-                    type="button"
-                    onClick={() => setLayout(template.id as CardLayout)}
-                    className={`rounded-xl border p-4 text-left transition-all ${
-                      layout === template.id
-                        ? "border-accent bg-editor-surface ring-1 ring-accent/30"
-                        : "border-editor-border bg-editor-surface hover:border-white/20"
-                    }`}
-                  >
-                    <p className="text-sm font-semibold text-fg">{template.name}</p>
-                    <p className="mt-1 text-[12px] text-fg-muted">{template.description}</p>
-                  </button>
-                ))}
-              </div>
+              <TypographyControls />
             </div>
 
             <div>
@@ -157,16 +165,16 @@ export function EditorFinish({ onBack }: EditorFinishProps) {
           </div>
 
           <div className="lg:sticky lg:top-8 lg:self-start">
-            <p className="mb-3 text-[11px] font-medium tracking-[0.2em] text-fg-muted uppercase">
-              Live preview
-            </p>
-            <BusinessCard
-              data={cardData}
-              theme={theme}
-              layout={layout}
-              logoUrl={logoUrl}
-              size="editor"
-            />
+            <EditorPreviewFrame>
+              <BusinessCard
+                data={cardData}
+                theme={theme}
+                layout={layout}
+                logoUrl={logoUrl}
+                typography={typography}
+                size="editor"
+              />
+            </EditorPreviewFrame>
           </div>
         </div>
       </div>
