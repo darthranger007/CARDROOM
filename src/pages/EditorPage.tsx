@@ -1,13 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CardExportTarget } from "../components/editor/CardExportTarget";
-import { CardForm } from "../components/editor/CardForm";
-import { CardPreview } from "../components/editor/CardPreview";
-import { ExportPanel } from "../components/editor/ExportPanel";
-import { LogoUpload } from "../components/editor/LogoUpload";
-import { TemplateSelector } from "../components/editor/TemplateSelector";
-import { ThemeSelector } from "../components/editor/ThemeSelector";
-import { Header } from "../components/layout/Header";
+import { EditorEssentials } from "../components/editor/EditorEssentials";
+import { EditorFinish } from "../components/editor/EditorFinish";
 import { useCard } from "../context/CardContext";
 import type { CardLayout } from "../types/card";
 
@@ -16,6 +11,7 @@ const validTemplates: CardLayout[] = ["classic", "editorial", "minimal"];
 export function EditorPage() {
   const [searchParams] = useSearchParams();
   const { loadTemplate, setTheme } = useCard();
+  const [step, setStep] = useState<"essentials" | "finish">("essentials");
 
   useEffect(() => {
     const template = searchParams.get("template");
@@ -31,37 +27,15 @@ export function EditorPage() {
   }, [searchParams, loadTemplate, setTheme]);
 
   return (
-    <div className="min-h-screen bg-paper text-ink">
-      <Header variant="light" />
+    <div className="min-h-screen bg-editor-bg text-fg">
       <CardExportTarget />
-      <main className="px-6 pt-24 pb-16 sm:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-10">
-            <p className="text-xs tracking-[0.25em] text-ink-muted uppercase">
-              Card editor
-            </p>
-            <h1 className="mt-2 text-3xl font-bold tracking-[-0.02em] sm:text-4xl">
-              Shape your introduction.
-            </h1>
-          </div>
-
-          <div className="grid gap-10 lg:grid-cols-[1fr_380px] xl:grid-cols-[1fr_420px]">
-            <div className="space-y-10">
-              <CardForm />
-              <LogoUpload />
-              <TemplateSelector />
-              <ThemeSelector />
-              <ExportPanel />
-            </div>
-
-            <div className="hidden lg:block">
-              <CardPreview />
-            </div>
-          </div>
-
-          <div className="mt-10 lg:hidden">
-            <CardPreview />
-          </div>
+      <main className="flex min-h-screen items-start justify-center px-4 py-8 sm:px-6 sm:py-12">
+        <div className="w-full max-w-[1100px] rounded-[28px] border border-editor-border bg-editor-panel p-6 sm:p-10 lg:p-12">
+          {step === "essentials" ? (
+            <EditorEssentials onContinue={() => setStep("finish")} />
+          ) : (
+            <EditorFinish onBack={() => setStep("essentials")} />
+          )}
         </div>
       </main>
     </div>

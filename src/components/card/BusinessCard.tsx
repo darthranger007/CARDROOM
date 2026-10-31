@@ -1,7 +1,7 @@
 import { getTheme } from "../../data/templates";
 import type { CardData, CardLayout, CardTheme } from "../../types/card";
 
-type CardSize = "default" | "showcase";
+type CardSize = "default" | "showcase" | "editor";
 
 interface BusinessCardProps {
   data: CardData;
@@ -10,20 +10,23 @@ interface BusinessCardProps {
   logoUrl?: string | null;
   className?: string;
   index?: string;
+  badge?: string;
   exportMode?: boolean;
   size?: CardSize;
 }
 
+type LogoSize = "sm" | "md" | "lg";
+
 function CardLogo({
   logoUrl,
-  large,
-  themeBorder,
+  size = "md",
+  onDarkCard,
 }: {
   logoUrl: string;
-  large: boolean;
-  themeBorder: string;
+  size?: LogoSize;
+  onDarkCard?: boolean;
 }) {
-  const dim = large ? 72 : 40;
+  const dim = size === "lg" ? 96 : size === "md" ? 56 : 44;
 
   return (
     <img
@@ -34,9 +37,9 @@ function CardLogo({
       style={{
         width: dim,
         height: dim,
-        border: `1px solid ${themeBorder}`,
-        borderRadius: 4,
-        padding: large ? 4 : 2,
+        filter: onDarkCard
+          ? "drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))"
+          : undefined,
       }}
     />
   );
@@ -49,29 +52,46 @@ export function BusinessCard({
   logoUrl,
   className = "",
   index,
+  badge,
   exportMode = false,
   size = "default",
 }: BusinessCardProps) {
   const theme = getTheme(themeId);
+  const isEditor = size === "editor" && !exportMode;
   const isShowcase = size === "showcase" && !exportMode;
-  const isLarge = isShowcase || exportMode;
+  const isLarge = isShowcase || isEditor || exportMode;
 
   const contactLine = [data.email, data.location || data.year]
     .filter(Boolean)
     .join(" / ");
 
   const pad = exportMode ? 48 : isShowcase ? undefined : undefined;
-  const logoOffset = logoUrl ? (isLarge ? 88 : 48) : 0;
+  const logoSize: LogoSize = exportMode ? "lg" : isEditor || isShowcase ? "md" : "sm";
+  const logoReserve = logoUrl
+    ? logoSize === "lg"
+      ? 108
+      : logoSize === "md"
+        ? 64
+        : 48
+    : 0;
+  const logoOffset = logoReserve;
+  const onDarkCard = themeId === "cobalt" || themeId === "charcoal";
 
   const shellClass = exportMode
     ? `relative h-full w-full overflow-hidden ${className}`
-    : `relative aspect-[1.75/1] w-full overflow-hidden ${isShowcase ? "rounded-[20px]" : "rounded-xl shadow-md"} ${className}`;
+    : `relative w-full overflow-hidden ${
+        isEditor
+          ? "h-full min-h-[280px] rounded-[24px]"
+          : `aspect-[1.75/1] ${isShowcase ? "rounded-[18px]" : "rounded-xl shadow-md"}`
+      } ${className}`;
 
   const padClass = exportMode
     ? ""
-    : isShowcase
-      ? "p-8 lg:p-10"
-      : "p-5 sm:p-6";
+    : isEditor
+      ? "p-10 lg:p-12"
+      : isShowcase
+        ? "p-7 sm:p-8 lg:p-9"
+        : "p-5 sm:p-6";
 
   const indexColor =
     themeId === "paper" ? theme.accent : theme.textMuted;
@@ -85,31 +105,44 @@ export function BusinessCard({
         border: exportMode ? "none" : `1px solid ${theme.border}`,
       }}
     >
-      {index && !exportMode && (
+      {(badge || index) &&
+        !exportMode &&
+        !(index && isShowcase) &&
+        !(badge && isEditor) && (
         <span
-          className={`absolute font-medium tracking-wide ${isShowcase ? "top-8 left-8 text-[13px] lg:top-10 lg:left-10" : "top-4 left-4 text-[10px] opacity-60"}`}
-          style={{ color: isShowcase ? indexColor : theme.textMuted }}
+          className={`absolute font-semibold tracking-wide ${
+            isEditor
+              ? "top-10 left-10 text-[13px]"
+              : "top-4 left-4 text-[10px] opacity-60"
+          } ${!badge && themeId === "paper" && isEditor ? "text-accent" : ""}`}
+          style={{
+            color: badge
+              ? theme.textMuted
+              : !badge && themeId === "paper" && isEditor
+                ? undefined
+                : isEditor
+                  ? indexColor
+                  : theme.textMuted,
+          }}
         >
-          — {index}
+          — {badge ?? index}
         </span>
       )}
 
-      {logoUrl && (
+      {logoUrl && layout !== "minimal" && (
         <div
           className={
             exportMode
               ? "absolute"
-              : isShowcase
-                ? "absolute top-8 right-8 lg:top-10 lg:right-10"
-                : "absolute top-4 right-4 sm:top-5 sm:right-5"
+              : isEditor
+                ? "absolute top-10 right-10"
+                : isShowcase
+                  ? "absolute top-8 right-8 lg:top-10 lg:right-10"
+                  : "absolute top-4 right-4 sm:top-5 sm:right-5"
           }
           style={exportMode ? { top: pad, right: pad } : undefined}
         >
-          <CardLogo
-            logoUrl={logoUrl}
-            large={isLarge}
-            themeBorder={theme.border}
-          />
+          <CardLogo logoUrl={logoUrl} size={logoSize} onDarkCard={onDarkCard} />
         </div>
       )}
 
@@ -119,40 +152,62 @@ export function BusinessCard({
           style={exportMode ? { padding: pad } : undefined}
         >
           <div style={{ paddingRight: logoOffset }}>
+            {index && isShowcase && (
+              <p
+                className={`mb-5 text-[13px] font-semibold tracking-wide ${
+                  themeId === "paper" ? "text-accent" : ""
+                }`}
+                style={
+                  themeId !== "paper" ? { color: indexColor } : undefined
+                }
+              >
+                — {index}
+              </p>
+            )}
             <h3
               className={`leading-tight font-bold tracking-[-0.02em] ${
                 exportMode
                   ? ""
-                  : isShowcase
-                    ? "text-[1.75rem] lg:text-[2rem]"
-                    : "text-xl sm:text-2xl"
+                  : isEditor
+                    ? "text-[2rem] lg:text-[2.25rem]"
+                    : isShowcase
+                      ? "text-[1.75rem] lg:text-[2rem]"
+                      : "text-xl sm:text-2xl"
               }`}
               style={{
                 color: theme.text,
                 fontSize: exportMode ? 44 : undefined,
               }}
             >
-              {data.name || "Your Name"}
+              {data.name || "Your name"}
             </h3>
             <p
               className={`tracking-wide ${
                 exportMode
                   ? "mt-2"
-                  : isShowcase
-                    ? "mt-2 text-[15px] lg:text-base"
-                    : "mt-1 text-xs sm:text-sm"
+                  : isEditor
+                    ? "mt-3 text-base lg:text-lg"
+                    : isShowcase
+                      ? "mt-2 text-[15px] text-ink-muted"
+                      : "mt-1 text-xs sm:text-sm"
               }`}
               style={{
                 color: theme.textMuted,
                 fontSize: exportMode ? 22 : undefined,
               }}
             >
-              {data.role || "Your Role"}
+              {data.role || "Independent Creative Director"}
             </p>
           </div>
           <p
             className={`tracking-wide ${
-              exportMode ? "" : isShowcase ? "text-[13px] lg:text-sm" : "text-[10px] sm:text-xs"
+              exportMode
+                ? ""
+                : isEditor
+                  ? "text-sm lg:text-base"
+                  : isShowcase
+                    ? "text-[13px] lg:text-sm"
+                    : "text-[10px] sm:text-xs"
             }`}
             style={{
               color: theme.textMuted,
@@ -222,14 +277,7 @@ export function BusinessCard({
           className={`flex h-full items-center justify-between ${
             exportMode ? "gap-6" : isShowcase ? "gap-6" : "gap-4"
           } ${padClass}`}
-          style={
-            exportMode
-              ? {
-                  padding: pad,
-                  paddingTop: logoUrl ? (pad ?? 0) + 56 : pad,
-                }
-              : undefined
-          }
+          style={exportMode ? { padding: pad } : undefined}
         >
           <div className="min-w-0 flex-1">
             <h3
@@ -271,25 +319,34 @@ export function BusinessCard({
               backgroundColor: theme.border,
             }}
           />
-          <p
-            className={`shrink-0 text-right tracking-wide ${
-              exportMode
-                ? ""
-                : isShowcase
-                  ? "text-[13px] lg:text-sm"
-                  : "text-[9px] leading-relaxed sm:text-[10px]"
-            }`}
-            style={{
-              color: theme.textMuted,
-              fontSize: exportMode ? 18 : undefined,
-            }}
-          >
-            {contactLine.split(" / ").map((line, i) => (
-              <span key={i} className="block">
-                {line}
-              </span>
-            ))}
-          </p>
+          <div className="flex max-w-[42%] shrink-0 flex-col items-end justify-center gap-3">
+            {logoUrl && (
+              <CardLogo
+                logoUrl={logoUrl}
+                size={exportMode ? "lg" : "sm"}
+                onDarkCard={onDarkCard}
+              />
+            )}
+            <p
+              className={`text-right tracking-wide ${
+                exportMode
+                  ? ""
+                  : isShowcase
+                    ? "text-[13px] lg:text-sm"
+                    : "text-[9px] leading-relaxed sm:text-[10px]"
+              }`}
+              style={{
+                color: theme.textMuted,
+                fontSize: exportMode ? 18 : undefined,
+              }}
+            >
+              {contactLine.split(" / ").map((line, i) => (
+                <span key={i} className="block">
+                  {line}
+                </span>
+              ))}
+            </p>
+          </div>
         </div>
       )}
     </div>

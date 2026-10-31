@@ -3,8 +3,8 @@ import type { CardData, CardTemplate, CardThemeConfig } from "../types/card";
 export const themes: CardThemeConfig[] = [
   {
     id: "paper",
-    name: "Crisp paper",
-    description: "Clean ivory tones with sharp black type",
+    name: "Paper",
+    description: "Quiet, considered, direct",
     background: "#f5f3ef",
     text: "#0a0a0a",
     textMuted: "#6b6560",
@@ -13,8 +13,8 @@ export const themes: CardThemeConfig[] = [
   },
   {
     id: "cobalt",
-    name: "Cobalt confidence",
-    description: "Deep blue with assured white lettering",
+    name: "Cobalt",
+    description: "Clear, bright, confident",
     background: "#2b7fff",
     text: "#ffffff",
     textMuted: "rgba(255, 255, 255, 0.75)",
@@ -23,8 +23,8 @@ export const themes: CardThemeConfig[] = [
   },
   {
     id: "charcoal",
-    name: "Quiet charcoal",
-    description: "Understated dark with warm gray details",
+    name: "Charcoal",
+    description: "Calm, premium, graphic",
     background: "#141824",
     text: "#f0eeeb",
     textMuted: "#8b95a8",
@@ -76,6 +76,15 @@ export const templates: CardTemplate[] = [
 ];
 
 export const defaultCardData: CardData = {
+  name: "",
+  role: "",
+  email: "",
+  location: "",
+  tagline: "",
+  year: "",
+};
+
+export const heroCardData: CardData = {
   name: "Nila Rao",
   role: "Independent Creative Director",
   email: "nila@raoworks.studio",

@@ -6,7 +6,7 @@ import { LandingPage } from "./pages/LandingPage";
 export default function App() {
   return (
     <CardProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/editor" element={<EditorPage />} />

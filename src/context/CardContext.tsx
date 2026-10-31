@@ -24,7 +24,7 @@ const CardContext = createContext<CardContextValue | null>(null);
 
 export function CardProvider({ children }: { children: ReactNode }) {
   const [cardData, setCardData] = useState<CardData>(defaultCardData);
-  const [theme, setTheme] = useState<CardTheme>("paper");
+  const [theme, setTheme] = useState<CardTheme>("cobalt");
   const [layout, setLayout] = useState<CardLayout>("classic");
   const [logoUrl, setLogoUrlState] = useState<string | null>(null);
 

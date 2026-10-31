@@ -22,6 +22,14 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
+## Live site
+
+After deployment, the app is hosted on GitHub Pages at:
+
+https://darthranger007.github.io/CARDROOM/
+
+Enable **Settings → Pages → Build and deployment → GitHub Actions** on the repository if the workflow has not run yet.
+
 ## Tech stack
 
 - React 19 + TypeScript
